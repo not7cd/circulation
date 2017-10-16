@@ -9,7 +9,7 @@
     <div class="container-fluid well well-lg">
 
         <h3>{{ title }}</h3>
-        <button id="get_book_from_douban" class="btn btn-primary btn-block">Fetch Book Info</button>
+        <button id="get_book_from_google" class="btn btn-primary btn-block">Fetch Book Info</button>
         {{ wtf.quick_form(form,button_map={'submit':'success'}) }}
     </div>
 
@@ -20,7 +20,7 @@
     <script src="{{ url_for('static',filename='js/Markdown.Converter.min.js') }}"></script>
     <script src="{{ url_for('static',filename='js/Markdown.Sanitizer.min.js') }}"></script>
     <script src="{{ url_for('static',filename='js/bootstrap-tokenfield.min.js') }}"></script>
-    <script src="{{ url_for('static',filename='js/get_book_from_douban.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/get_book_from_google.js') }}"></script>
     <script>
         $('#tags').tokenfield({
             delimiter: [",", " ", "/"]

@@ -45,7 +45,7 @@
         var isbn = document.getElementById('isbn').value;
 
         if (isNaN(isbn) || isbn.length != 13) {
-            createMessage('请填写正确的13位数字ISBN', 'warning');
+            createMessage('Please provide a 13-digit ISBN', 'warning');
         }
         else {
             var douban_API = 'http://api.douban.com/v2/book/isbn/';

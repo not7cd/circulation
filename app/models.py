@@ -173,21 +173,16 @@ class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     isbn = db.Column(db.String(16), unique=True)
     title = db.Column(db.String(128))
-    origin_title = db.Column(db.String(128))
     subtitle = db.Column(db.String(128))
-    author = db.Column(db.String(128))
+    authors = db.Column(db.String(128))
     translator = db.Column(db.String(64))
     publisher = db.Column(db.String(64))
-    image = db.Column(db.String(128))
-    pubdate = db.Column(db.String(32))
-    pages = db.Column(db.Integer)
-    price = db.Column(db.String(16))
-    binding = db.Column(db.String(16))
+    thumbnail = db.Column(db.String(128))
+    publishedDate = db.Column(db.String(32))
+    pageCount = db.Column(db.Integer)
     numbers = db.Column(db.Integer, default=5)
     summary = db.deferred(db.Column(db.Text, default=""))
     summary_html = db.deferred(db.Column(db.Text))
-    catalog = db.deferred(db.Column(db.Text, default=""))
-    catalog_html = db.deferred(db.Column(db.Text))
     hidden = db.Column(db.Boolean, default=0)
 
     logs = db.relationship('Log',
@@ -231,20 +226,11 @@ class Book(db.Model):
             bleach.clean(markdown(value, output_format='html'),
                          tags=allowed_tags, strip=True))
 
-    @staticmethod
-    def on_changed_catalog(target, value, oldvalue, initiaor):
-        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code', 'em', 'i',
-                        'li', 'ol', 'pre', 'strong', 'ul', 'h1', 'h2', 'h3', 'p']
-        target.catalog_html = bleach.linkify(
-            bleach.clean(markdown(value, output_format='html'),
-                         tags=allowed_tags, strip=True))
-
     def __repr__(self):
         return u'<Book %r>' % self.title
 
 
 db.event.listen(Book.summary, 'set', Book.on_changed_summary)
-db.event.listen(Book.catalog, 'set', Book.on_changed_catalog)
 
 
 class Log(db.Model):

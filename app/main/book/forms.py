@@ -13,21 +13,17 @@ class EditBookForm(Form):
                                    Regexp('[0-9]{13,13}', message=u"ISBN must be 13 digits")])
     title = StringField(u"Book title",
                         validators=[DataRequired(message=u"Required field"), Length(1, 128, message=u"Up to 128 characters")])
-    origin_title = StringField(u"Original title", validators=[Length(0, 128, message=u"Up to 128 characters")])
     subtitle = StringField(u"Subtitle", validators=[Length(0, 128, message=u"Up to 128 characters")])
-    author = StringField(u"Author", validators=[Length(0, 128, message=u"Up to 64 characters")])
+    authors = StringField(u"Authors", validators=[Length(0, 128, message=u"Up to 64 characters")])
     translator = StringField(u"Translator",
                              validators=[Length(0, 64, message=u"Up to 64 characters")])
     publisher = StringField(u"Publisher", validators=[Length(0, 64, message=u"Up to 64 characters")])
-    image = StringField(u"Image location", validators=[Length(0, 128, message=u"Up to 128 characters")])
-    pubdate = StringField(u"Publication date", validators=[Length(0, 32, message=u"Up to 32 characters")])
+    thumbnail = StringField(u"Cover URL", validators=[Length(0, 128, message=u"Up to 128 characters")])
+    publishedDate = StringField(u"Publication date", validators=[Length(0, 32, message=u"Up to 32 characters")])
     tags = StringField(u"Tags", validators=[Length(0, 128, message=u"Up to 128 characters")])
-    pages = IntegerField(u"Pages")
-    price = StringField(u"Price", validators=[Length(0, 64, message=u"Up to 32 characters")])
-    binding = StringField(u"Binding", validators=[Length(0, 16, message=u"Up to 16 characters")])
+    pageCount = IntegerField(u"pageCount")
     numbers = IntegerField(u"Collection", validators=[DataRequired(message=u"Required field")])
     summary = PageDownField(u"Description")
-    catalog = PageDownField(u"Contents")
     submit = SubmitField(u"Save changes")
 
 

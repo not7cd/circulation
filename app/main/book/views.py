@@ -22,7 +22,7 @@ def index():
     if search_word:
         search_word = search_word.strip()
         the_books = the_books.filter(db.or_(
-            Book.title.ilike(u"%%%s%%" % search_word), Book.author.ilike(u"%%%s%%" % search_word), Book.isbn.ilike(
+            Book.title.ilike(u"%%%s%%" % search_word), Book.authors.ilike(u"%%%s%%" % search_word), Book.isbn.ilike(
                 u"%%%s%%" % search_word), Book.tags.any(Tag.name.ilike(u"%%%s%%" % search_word)), Book.subtitle.ilike(
                 u"%%%s%%" % search_word))).outerjoin(Log).group_by(Book.id).order_by(db.func.count(Log.id).desc())
         search_form.search.data = search_word
@@ -66,40 +66,32 @@ def edit(book_id):
     if form.validate_on_submit():
         book.isbn = form.isbn.data
         book.title = form.title.data
-        book.origin_title = form.origin_title.data
         book.subtitle = form.subtitle.data
-        book.author = form.author.data
+        book.authors = form.authors.data
         book.translator = form.translator.data
         book.publisher = form.publisher.data
-        book.image = form.image.data
-        book.pubdate = form.pubdate.data
+        book.thumbnail = form.thumbnail.data
+        book.publishedDate = form.publishedDate.data
         book.tags_string = form.tags.data
-        book.pages = form.pages.data
-        book.price = form.price.data
-        book.binding = form.binding.data
+        book.pageCount = form.pageCount.data
         book.numbers = form.numbers.data
         book.summary = form.summary.data
-        book.catalog = form.catalog.data
         db.session.add(book)
         db.session.commit()
         flash(u'Book information saved.', 'success')
         return redirect(url_for('book.detail', book_id=book_id))
     form.isbn.data = book.isbn
     form.title.data = book.title
-    form.origin_title.data = book.origin_title
     form.subtitle.data = book.subtitle
-    form.author.data = book.author
+    form.authors.data = book.authors
     form.translator.data = book.translator
     form.publisher.data = book.publisher
-    form.image.data = book.image
-    form.pubdate.data = book.pubdate
+    form.thumbnail.data = book.thumbnail
+    form.publishedDate.data = book.publishedDate
     form.tags.data = book.tags_string
-    form.pages.data = book.pages
-    form.price.data = book.price
-    form.binding.data = book.binding
+    form.pageCount.data = book.pageCount
     form.numbers.data = book.numbers
     form.summary.data = book.summary or ""
-    form.catalog.data = book.catalog or ""
     return render_template("book_edit.html", form=form, book=book, title=u"Edit book information")
 
 
@@ -112,20 +104,16 @@ def add():
         new_book = Book(
             isbn=form.isbn.data,
             title=form.title.data,
-            origin_title=form.origin_title.data,
             subtitle=form.subtitle.data,
-            author=form.author.data,
+            authors=form.authors.data,
             translator=form.translator.data,
             publisher=form.publisher.data,
-            image=form.image.data,
-            pubdate=form.pubdate.data,
+            thumbnail=form.thumbnail.data,
+            publishedDate=form.publishedDate.data,
             tags_string=form.tags.data,
-            pages=form.pages.data,
-            price=form.price.data,
-            binding=form.binding.data,
+            pageCount=form.pageCount.data,
             numbers=form.numbers.data,
-            summary=form.summary.data or "",
-            catalog=form.catalog.data or "")
+            summary=form.summary.data or "")
         db.session.add(new_book)
         db.session.commit()
         flash(u'%s sucessfully added' % new_book.title, 'success')

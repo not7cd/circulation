@@ -11,16 +11,13 @@
             {%- endif -%}
         </h1>
         <div class="primary-info">
-            {%- if book.image -%}
-                <img class="img-responsive" src="{{ book.image }}" alt="{{ book.title~' cover' }}">
+            {%- if book.thumbnail -%}
+                <img class="img-responsive" src="{{ book.thumbnail }}" alt="{{ book.title~' cover' }}">
             {%- endif -%}
             <ul class="list-group">
                 <li class="list-group-item">ISBN: {{ book.isbn }}</li>
-                {%- if book.origin_title -%}
-                    <li class="list-group-item">Book title: {{ book.origin_title }}</li>
-                {%- endif -%}
                 {%- if book.author -%}
-                    <li class="list-group-item">Author: {{ book.author }}</li>
+                    <li class="list-group-item">Authors: {{ book.authors }}</li>
                 {%- endif -%}
                 {%- if book.translator -%}
                     <li class="list-group-item">Translator: {{ book.translator }}</li>
@@ -28,8 +25,8 @@
                 {%- if book.publisher -%}
                     <li class="list-group-item">Publisher: {{ book.publisher }}</li>
                 {%- endif -%}
-                {%- if book.pubdate -%}
-                    <li class="list-group-item">Date published: {{ book.pubdate }}</li>
+                {%- if book.publishedDate -%}
+                    <li class="list-group-item">Date published: {{ book.publishedDate }}</li>
                 {%- endif -%}
                 {%- if book.tags.count() -%}
                     <li class="list-group-item">tags:
@@ -40,13 +37,7 @@
                     </li>
                 {%- endif -%}
                 {%- if book.pages -%}
-                    <li class="list-group-item">Pages: {{ book.pages }}</li>
-                {%- endif -%}
-                {%- if book.price -%}
-                    <li class="list-group-item">Price: {{ book.price }}</li>
-                {%- endif -%}
-                {%- if book.binding -%}
-                    <li class="list-group-item">Binding: {{ book.binding }}</li>
+                    <li class="list-group-item">Pages: {{ book.pageCount }}</li>
                 {%- endif -%}
                 <li class="list-group-item">Collection / Borrowable: {{ book.numbers }} / {{ book.can_borrow_number() }}</li>
             </ul>
@@ -58,7 +49,7 @@
                     <h4 class="panel-title">
                         <a role="button" data-toggle="collapse" data-parent="#accordion" href="#summary"
                            aria-expanded="true" aria-controls="collapseOne">
-                            Synopsis
+                            Description
                         </a>
                     </h4>
                 </div>
@@ -69,26 +60,6 @@
                             {{ book.summary_html|safe }}
                         {%- else -%}
                             {{ book.summary }}
-                        {%- endif -%}
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="catalog">
-                    <h4 class="panel-title">
-                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
-                           href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            Contents
-                        </a>
-                    </h4>
-                </div>
-                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel"
-                     aria-labelledby="headingTwo">
-                    <div class="panel-body">
-                        {%- if book.catalog_html -%}
-                            {{ book.catalog_html|safe }}
-                        {%- else -%}
-                            {{ book.catalog }}
                         {%- endif -%}
                     </div>
                 </div>
