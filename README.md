@@ -1,71 +1,63 @@
-# BookLibrary
-Simple Book library application written on flask with SQLite database.
+# Circulation
 
-## Features
-* user login, logout, register, change password, update about-me information
-* user borrow/return books, write/delete comments
-* administrator add/delete book, update book information
-* administrator delete comments
+Circulation encourages people to re-use resources which are too often single use. How many of the books in your home will only be read by one person when there is no reason they could not be read by many people? By making our personal resources available to our neighbors, we hope to foster exchanges in our communities.
 
-## Screen Shot
-Index page:
-![index page](https://cloud.githubusercontent.com/assets/7829098/18173715/3e9ccc62-709d-11e6-820d-1cad1e6822b7.png)
+## Key Features
+* Support for multiple languages
+* Mobile responsive
 
-User detail page:
-![user detail page](https://cloud.githubusercontent.com/assets/7829098/18173713/3e324018-709d-11e6-9a64-b8c7e87b1f2d.png)
+## Getting Started
 
-Book list page:
-![book list page](https://cloud.githubusercontent.com/assets/7829098/18173712/3defdba6-709d-11e6-99f4-aa0471c75af0.png)
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-Book detail page:
-![book detail page](https://cloud.githubusercontent.com/assets/7829098/18173711/3dbdfe92-709d-11e6-8a63-85c64717ac70.png)
+### Prerequisites
 
-## Installation
+* [Python](https://www.python.org/)
+* [virtualenv](https://virtualenv.pypa.io/en/stable/)
+
+### Installing
 ```sh
-git clone https://github.com/hufan-Akari/BookLibrary.git
-cd BookLibrary
+<!-- Clone Circulation repository -->
+git clone https://github.com/justincredble/circulation.git
+
+<!-- Change into local repo -->
+cd circulation
+
+<!-- Create virtual environment -->
 virtualenv ./venv
+
+<!-- Activate new venv -->
 source ./venv/bin/activate
+
+<!-- Install dependencies -->
 pip install -r requirements.txt
+
+<!-- Run the web app -->
 python ./run.py
 ```
 
-Press CTRL+C to terminate the server.  
-use `deactive` to quit the virtual environment.
+## Built With
 
-## Dependencies
+* [Flask](http://flask.pocoo.org/) - Python Web framework
+* [SQLite](https://www.sqlite.org/) - Database
+* [Bootstrap](http://getbootstrap.com/) - CSS framework
 
-- [Flask](https://github.com/mitsuhiko/flask)
-- [SQLAlchemy](https://github.com/zzzeek/sqlalchemy)
-- [Flask-SQLAlchemy](https://github.com/mitsuhiko/flask-sqlalchemy)
-- [Flask-Login](https://github.com/maxcountryman/flask-login)
-- [Flask-WTF](https://github.com/lepture/flask-wtf)
-- [Bootstrap](http://getbootstrap.com/)
-- [Flask-Bootstrap](https://github.com/mbr/flask-bootstrap)
-- [Markdown](https://pythonhosted.org/Markdown/)
-- [Flask-PageDown](https://github.com/miguelgrinberg/Flask-PageDown)
-- [Flask-Uploads](https://packages.python.org/Flask-Uploads/)
-- [Bootstrap File Input](https://github.com/kartik-v/bootstrap-file-input)
+## Contributing
 
-## LICENSE
-The MIT License (MIT)
+Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
 
-Copyright (c) 2016 胡凡
+## Versioning
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/justincredble/circulation/tags).
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+## Authors
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+* **阿卡琳** - *Initial work* - [hufan-akari](https://github.com/hufan-akari)
+* **Justin McLemore** - [justincredble](https://github.com/justincredble/)
+* **Philip Diller** - [?](https://github.com/)
+
+See also the list of [contributors](https://github.com/justincredble/circulation/graphs/contributors) who participated in this project.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
