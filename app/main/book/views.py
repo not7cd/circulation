@@ -32,7 +32,7 @@ def index():
     pagination = the_books.paginate(page, per_page=8)
     result_books = pagination.items
     return render_template("book.html", books=result_books, pagination=pagination, search_form=search_form,
-                           title=u"书籍清单")
+                           title=u"Listing of books")
 
 
 @book.route('/<book_id>/')
@@ -82,7 +82,7 @@ def edit(book_id):
         book.catalog = form.catalog.data
         db.session.add(book)
         db.session.commit()
-        flash(u'书籍资料已保存!', 'success')
+        flash(u'Book information saved.', 'success')
         return redirect(url_for('book.detail', book_id=book_id))
     form.isbn.data = book.isbn
     form.title.data = book.title
@@ -100,7 +100,7 @@ def edit(book_id):
     form.numbers.data = book.numbers
     form.summary.data = book.summary or ""
     form.catalog.data = book.catalog or ""
-    return render_template("book_edit.html", form=form, book=book, title=u"编辑书籍资料")
+    return render_template("book_edit.html", form=form, book=book, title=u"Edit book information")
 
 
 @book.route('/add/', methods=['GET', 'POST'])
@@ -128,9 +128,9 @@ def add():
             catalog=form.catalog.data or "")
         db.session.add(new_book)
         db.session.commit()
-        flash(u'书籍 %s 已添加至图书馆!' % new_book.title, 'success')
+        flash(u'%s sucessfully added' % new_book.title, 'success')
         return redirect(url_for('book.detail', book_id=new_book.id))
-    return render_template("book_edit.html", form=form, title=u"添加新书")
+    return render_template("book_edit.html", form=form, title=u"Add new book")
 
 
 @book.route('/<int:book_id>/delete/')
@@ -140,7 +140,7 @@ def delete(book_id):
     the_book.hidden = 1
     db.session.add(the_book)
     db.session.commit()
-    flash(u'成功删除书籍,用户已经无法查看该书籍', 'info')
+    flash(u'Book record deleted.', 'info')
     return redirect(request.args.get('next') or url_for('book.detail', book_id=book_id))
 
 
@@ -151,7 +151,7 @@ def put_back(book_id):
     the_book.hidden = 0
     db.session.add(the_book)
     db.session.commit()
-    flash(u'成功恢复书籍,用户现在可以查看该书籍', 'info')
+    flash(u'Book record recovered', 'info')
     return redirect(request.args.get('next') or url_for('book.detail', book_id=book_id))
 
 

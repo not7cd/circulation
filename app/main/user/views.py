@@ -14,7 +14,7 @@ def index():
     page = request.args.get('page', 1, type=int)
     pagination = User.query.order_by(User.id.desc()).paginate(page, per_page=10)
     users = pagination.items
-    return render_template("user.html", users=users, pagination=pagination, title=u"已注册用户")
+    return render_template("user.html", users=users, pagination=pagination, title=u"Registered users")
 
 
 @user.route('/<int:user_id>/')
@@ -31,7 +31,7 @@ def detail(user_id):
     logs = pagination.items
 
     return render_template("user_detail.html", user=the_user, logs=logs, pagination=pagination,
-                           title=u"用户: " + the_user.name)
+                           title=u"User name: " + the_user.name)
 
 
 @user.route('/<int:user_id>/edit/', methods=['GET', 'POST'])
@@ -47,14 +47,14 @@ def edit(user_id):
             the_user.about_me = form.about_me.data
             db.session.add(the_user)
             db.session.commit()
-            flash(u'资料更新成功!', "info")
+            flash(u'Information updatad', "info")
             return redirect(url_for('user.detail', user_id=user_id))
         form.name.data = the_user.name
         form.major.data = the_user.major
         form.headline.data = the_user.headline
         form.about_me.data = the_user.about_me
 
-        return render_template('user_edit.html', form=form, user=the_user, title=u"编辑资料")
+        return render_template('user_edit.html', form=form, user=the_user, title=u"Edit information")
     else:
         abort(403)
 
@@ -73,7 +73,7 @@ def avatar(user_id):
                 the_user.avatar = json.dumps({"use_out_url": False, "url": avatar_name})
                 db.session.add(the_user)
                 db.session.commit()
-                flash(u'头像更新成功!', 'success')
+                flash(u'Avatar updated', 'success')
                 return redirect(url_for('user.detail', user_id=user_id))
         if avatar_edit_form.validate_on_submit():
             the_user.avatar = json.dumps({"use_out_url": True, "url": avatar_edit_form.avatar_url.data})
@@ -81,6 +81,6 @@ def avatar(user_id):
             db.session.commit()
             return redirect(url_for('user.detail', user_id=user_id))
         return render_template('avatar_edit.html', user=the_user, avatar_edit_form=avatar_edit_form,
-                               avatar_upload_form=avatar_upload_form, title=u"更换头像")
+                               avatar_upload_form=avatar_upload_form, title=u"Update avatar")
     else:
         abort(403)

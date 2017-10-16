@@ -4,7 +4,7 @@
         <div class="col-sm-8 col-sm-offset-2">
             <form class="form form-horizontal" method="get" action="{{ url_for('book.index') }}">
                 <div class="input-group  input-group-lg">
-                    {{ search_form.search(placeholder="按 <return> 搜索",class_="form-control") }}
+                    {{ search_form.search(placeholder="Press <Return> to Search",class_="form-control") }}
                 <span class="input-group-btn">
                     <input class="btn btn-primary" id="submit" name="submit" type="submit" value="Search">
                 </span>
@@ -13,16 +13,16 @@
         </div>
     </div>
     <table class="table table-striped table-hover animated fadeInDown">
-        <caption>热门图书 Top 5</caption>
+        <caption>Top 5 books</caption>
         <thead class="hidden-xs">
         <tr>
-            <th>书名</th>
-            <th>作者</th>
+            <th>Book title</th>
+            <th>Author</th>
             <th>ISBN</th>
-            <th>馆藏 / 可借</th>
-            <th>借阅册次</th>
+            <th>Collection / Borrowable</th>
+            <th>Number of times borrowed</th>
             {% if current_user.is_authenticated %}
-                <th>操作</th>
+                <th>Process</th>
             {% endif %}
         </tr>
         </thead>
@@ -31,7 +31,7 @@
             <tr class="animated fadeInLeft delay-{{ loop.index0 }}">
                 <td><a href="{{ url_for('book.detail',book_id=book.id) }}">{{ book.title }}</a>
                     <p class="visible-xs-block">{{ book.author }}</p>
-                    <p class="visible-xs-block">{{ "馆藏/可借: "~ book.numbers }} / {{ book.can_borrow_number() }}</p></td>
+                    <p class="visible-xs-block">{{ "Collection/Borrowable: "~ book.numbers }} / {{ book.can_borrow_number() }}</p></td>
                 <td class="hidden-xs">{{ book.author }}</td>
                 <td class="hidden-xs">{{ book.isbn }}</td>
                 <td class="hidden-xs">{{ book.numbers }} / {{ book.can_borrow_number() }}</td>
@@ -41,13 +41,13 @@
                         {% if log %}
                             <td><a class="btn btn-primary"
                                    href="{{ url_for('log.book_return',log_id=log.id,next=request.path) }}">
-                                归还
+                                Return
                             </a></td>
                         {% else %}
                             <td><a class="btn btn-success"
                                    href="{{ url_for('log.book_borrow',book_id=book.id,next=request.path) }}"
                                    {% if not book.can_borrow() %}disabled="disabled"{% endif %}>
-                                借阅
+                                Check out
                             </a></td>
                         {% endif %}
                     {% endwith %}
@@ -58,7 +58,7 @@
     </table>
     <div class="row animated fadeInUp delay">
         <div class="col-md-9">
-            <h4>最新书评</h4>
+            <h4>Latest reviews</h4>
             {% for comment in recently_comments %}
                 <li class="list-group-item clearfix animated fadeInLeft delay-{{ loop.index0 }}">
                     <div class="media">
@@ -78,16 +78,16 @@
                                 {% if comment.create_timestamp==comment.edit_timestamp %}
                                     <span class="pull-right">
                                         <small>
-                                            发布于: {{ comment.create_timestamp.strftime('%d %B %Y - %H:%M:%S') }}</small>
+                                            Post comment: {{ comment.create_timestamp.strftime('%d %B %Y - %H:%M:%S') }}</small>
                                     </span>
                                 {% else %}
                                     <span class="pull-right">
                                         <small>
-                                            编辑于: {{ comment.edit_timestamp.strftime('%d %B %Y - %H:%M:%S') }}</small>
+                                            Edit comment: {{ comment.edit_timestamp.strftime('%d %B %Y - %H:%M:%S') }}</small>
                                     </span>
                                 {% endif %}
                             </p>
-                            <span class="line-wrap">{{ "评价了 「"~comment.book.title~"」 : " }}</span>
+                            <span class="line-wrap">{{ ~comment.book.title~ "rated: " }}</span>
                             <span class="line-wrap"><a class="list-group-item-text"
                                                        href="{{ url_for('book.detail',book_id=comment.book_id) }}">{{ comment.comment }}</a></span>
                         </div>
@@ -97,11 +97,11 @@
         </div>
         <div class="col-md-3 animated fadeInUp">
             <table class="table table-striped table-hover">
-                <caption>风云读者 Top 5</caption>
+                <caption>Top 5 readers</caption>
                 <thead>
                 <tr>
-                    <th>借阅者姓名</th>
-                    <th>借阅次数</th>
+                    <th>Check out name</th>
+                    <th>Number of check outs</th>
                 </tr>
                 </thead>
                 <tbody>

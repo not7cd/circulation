@@ -12,27 +12,27 @@
         </h1>
         <div class="primary-info">
             {%- if book.image -%}
-                <img class="img-responsive" src="{{ book.image }}" alt="{{ book.title~' 封面' }}">
+                <img class="img-responsive" src="{{ book.image }}" alt="{{ book.title~' cover' }}">
             {%- endif -%}
             <ul class="list-group">
                 <li class="list-group-item">ISBN: {{ book.isbn }}</li>
                 {%- if book.origin_title -%}
-                    <li class="list-group-item">原作名: {{ book.origin_title }}</li>
+                    <li class="list-group-item">Book title: {{ book.origin_title }}</li>
                 {%- endif -%}
                 {%- if book.author -%}
-                    <li class="list-group-item">作者: {{ book.author }}</li>
+                    <li class="list-group-item">Author: {{ book.author }}</li>
                 {%- endif -%}
                 {%- if book.translator -%}
-                    <li class="list-group-item">译者: {{ book.translator }}</li>
+                    <li class="list-group-item">Translator: {{ book.translator }}</li>
                 {%- endif -%}
                 {%- if book.publisher -%}
-                    <li class="list-group-item">出版社: {{ book.publisher }}</li>
+                    <li class="list-group-item">Publisher: {{ book.publisher }}</li>
                 {%- endif -%}
                 {%- if book.pubdate -%}
-                    <li class="list-group-item">出版日期: {{ book.pubdate }}</li>
+                    <li class="list-group-item">Date published: {{ book.pubdate }}</li>
                 {%- endif -%}
                 {%- if book.tags.count() -%}
-                    <li class="list-group-item">标签:
+                    <li class="list-group-item">tags:
                         {% for tag in book.tags %}
                             <a class="tag line-wrap" href="{{ url_for('.tags',search=tag.name) }}">{{ tag.name }} <span
                                     class="badge">{{ tag.books.count() }}</span></a>
@@ -40,15 +40,15 @@
                     </li>
                 {%- endif -%}
                 {%- if book.pages -%}
-                    <li class="list-group-item">页数: {{ book.pages }}</li>
+                    <li class="list-group-item">Pages: {{ book.pages }}</li>
                 {%- endif -%}
                 {%- if book.price -%}
-                    <li class="list-group-item">定价: {{ book.price }}</li>
+                    <li class="list-group-item">Price: {{ book.price }}</li>
                 {%- endif -%}
                 {%- if book.binding -%}
-                    <li class="list-group-item">装帧: {{ book.binding }}</li>
+                    <li class="list-group-item">Binding: {{ book.binding }}</li>
                 {%- endif -%}
-                <li class="list-group-item">馆藏 / 可借: {{ book.numbers }} / {{ book.can_borrow_number() }}</li>
+                <li class="list-group-item">Collection / Borrowable: {{ book.numbers }} / {{ book.can_borrow_number() }}</li>
             </ul>
         </div>
         <br>
@@ -58,7 +58,7 @@
                     <h4 class="panel-title">
                         <a role="button" data-toggle="collapse" data-parent="#accordion" href="#summary"
                            aria-expanded="true" aria-controls="collapseOne">
-                            内容简介
+                            Synopsis
                         </a>
                     </h4>
                 </div>
@@ -78,7 +78,7 @@
                     <h4 class="panel-title">
                         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
                            href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            目录
+                            Contents
                         </a>
                     </h4>
                 </div>
@@ -102,31 +102,31 @@
                     {%- if log -%}
                         <a class="btn btn-primary"
                            href="{{ url_for('log.book_return',log_id=log.id,next=request.full_path ) }}">
-                            归还
+                            Return
                         </a>
                     {%- else -%}
                         <a class="btn btn-success"
                            href="{{ url_for('log.book_borrow',book_id=book.id,next=request.full_path) }}"
                            {%- if not book.can_borrow() -%}disabled="disabled"{%- endif -%}>
-                            借阅
+                            Check out
                         </a>
                     {%- endif -%}
                 {%- endwith -%}
             {%- endif -%}
             {%- if current_user.can(Permission.UPDATE_BOOK_INFORMATION) -%}
-                <a type="button" class="btn btn-warning" href="{{ url_for('book.edit',book_id=book.id) }}">编辑书籍信息
+                <a type="button" class="btn btn-warning" href="{{ url_for('book.edit',book_id=book.id) }}">Edit book information
                 </a>
             {%- endif -%}
 
             {%- if book.hidden -%}
                 {%- if current_user.is_administrator() -%}
                     <a type="button" class="btn btn-info"
-                       href="{{ url_for('book.put_back',book_id=book.id) }}">还原书籍</a>
+                       href="{{ url_for('book.put_back',book_id=book.id) }}">Restore book</a>
                 {%- endif -%}
             {%- else -%}
                 {%- if current_user.can(Permission.DELETE_BOOK) -%}
                     <a type="button" class="btn btn-danger"
-                       href="{{ url_for('book.delete',book_id=book.id) }}">删除书籍</a>
+                       href="{{ url_for('book.delete',book_id=book.id) }}">Remove book</a>
                 {%- endif -%}
             {%- endif -%}
         </div>
@@ -137,13 +137,13 @@
             {%- with tabindex= request.args.get('show') or '0' -%}
                 <li role="presentation" {%- if tabindex=='0' -%}class="active"{%- endif -%}><a
                         href="{%- if tabindex=='0' -%}#log{%- else -%}{{ url_for('book.detail',book_id=book.id,show=0,_anchor='log') }}{%- endif -%}"
-                        role="tab">书评</a></li>
+                        role="tab">Book rating</a></li>
                 <li role="presentation" {%- if tabindex=='1' -%}class="active"{%- endif -%}><a
                         href="{%- if tabindex=='1' -%}#log{%- else -%}{{ url_for('book.detail',book_id=book.id,show=1,_anchor='log') }}{%- endif -%}"
-                        role="tab">当前借阅信息</a></li>
+                        role="tab">Borrowing record</a></li>
                 <li role="presentation" {%- if tabindex=='2' -%}class="active"{%- endif -%}><a
                         href="{%- if tabindex=='2' -%}#log{%- else -%}{{ url_for('book.detail',book_id=book.id,show=2,_anchor='log') }}{%- endif -%}"
-                        role="tab">历史借阅信息</a></li>
+                        role="tab">Borrowing history</a></li>
             {%- endwith -%}
         </ul>
         <!-- Tab panes -->
@@ -158,7 +158,7 @@
                                 <div class="col-md-4 col-md-offset-4">
                                     <button type="button" class="btn btn-primary btn-block" data-toggle="modal"
                                             data-target="#myModal">
-                                        我来评价这本书
+                                        My rating
                                     </button>
                                 </div>
                             </div>
@@ -185,18 +185,18 @@
                                     {%- if comment.create_timestamp==comment.edit_timestamp -%}
                                         <h4>
                                             <small>
-                                                发布于: {{ comment.create_timestamp.strftime('%d %B %Y - %H:%M:%S') }}</small>
+                                                Post comment: {{ comment.create_timestamp.strftime('%d %B %Y - %H:%M:%S') }}</small>
                                         </h4>
                                     {%- else -%}
                                         <h4>
                                             <small>
-                                                编辑于: {{ comment.edit_timestamp.strftime('%d %B %Y - %H:%M:%S') }}</small>
+                                                Edit comment: {{ comment.edit_timestamp.strftime('%d %B %Y - %H:%M:%S') }}</small>
                                         </h4>
                                     {%- endif -%}
 
                                     {%- if comment.user_id == current_user.id or current_user.can(Permission.DELETE_OTHERS_COMMENT) -%}
                                         <a class="pull-right btn btn-danger btn-sm"
-                                           href="{{ url_for('comment.delete',comment_id=comment.id,next=request.url) }}">删除</a>
+                                           href="{{ url_for('comment.delete',comment_id=comment.id,next=request.url) }}">Delete</a>
                                     {%- endif -%}
                                 </div>
                             </div>
@@ -209,16 +209,16 @@
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                         aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title">{{ current_user.name~' 对 '~book.title~' 的书评' }}</h4>
+                                <h4 class="modal-title">{{ current_user.name~' rating of '~book.title~ }}</h4>
                             </div>
                             <form action="{{ url_for('comment.add',book_id=book.id) }}" method="post" class="form"
                                   role="form">
                                 {{ form.hidden_tag() }}
                                 <div class="modal-body">
-                                    {{ wtf.form_field(form.comment,placeholder="长度在1024字符以内(500字中文)") }}
+                                    {{ wtf.form_field(form.comment,placeholder="Up to 1024 characters") }}
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close
                                     </button>
                                     {{ wtf.form_field(form.submit,button_map={'submit':'success'}) }}
                             </form>
@@ -231,10 +231,10 @@
                     <table class="table table-striped table-hover">
                         <thead>
                         <tr>
-                            <th>用户名</th>
-                            <th class="hidden-xs">用户邮箱</th>
-                            <th>借阅日期</th>
-                            <th>归还日期</th>
+                            <th>User name</th>
+                            <th class="hidden-xs">User email</th>
+                            <th>Date borrowed</th>
+                            <th>Return date</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -252,17 +252,17 @@
                         </tbody>
                     </table>
                 {%- else -%}
-                    <div class="container-fluid">暂无信息</div>
+                    <div class="container-fluid">No information</div>
                 {%- endif -%}
             {%- else -%}
                 {%- if data -%}
                     <table class="table table-striped table-hover">
                         <thead>
                         <tr>
-                            <th>用户名</th>
-                            <th class="hidden-xs">用户邮箱</th>
-                            <th>借阅日期</th>
-                            <th>归还日期</th>
+                            <th>User name</th>
+                            <th class="hidden-xs">User email</th>
+                            <th>Date borrowed</th>
+                            <th>Return date</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -280,7 +280,7 @@
                         </tbody>
                     </table>
                 {%- else -%}
-                    <div class="container-fluid">暂无信息</div>
+                    <div class="container-fluid">No information</div>
                 {%- endif -%}
 
             {%- endif -%}

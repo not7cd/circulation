@@ -9,36 +9,34 @@ from wtforms.validators import Length, DataRequired, Regexp
 
 class EditBookForm(Form):
     isbn = StringField(u"ISBN",
-                       validators=[DataRequired(message=u"该项忘了填写了!"),
-                                   Regexp('[0-9]{13,13}', message=u"ISBN必须是13位数字")])
-    title = StringField(u"书名",
-                        validators=[DataRequired(message=u"该项忘了填写了!"), Length(1, 128, message=u"长度为1到128个字符")])
-    origin_title = StringField(u"原作名", validators=[Length(0, 128, message=u"长度为0到128个字符")])
-    subtitle = StringField(u"副标题", validators=[Length(0, 128, message=u"长度为0到128个字符")])
-    author = StringField(u"作者", validators=[Length(0, 128, message=u"长度为0到64个字符")])
-    translator = StringField(u"译者",
-                             validators=[Length(0, 64, message=u"长度为0到64个字符")])
-    publisher = StringField(u"出版社", validators=[Length(0, 64, message=u"长度为0到64个字符")])
-    image = StringField(u"图片地址", validators=[Length(0, 128, message=u"长度为0到128个字符")])
-    pubdate = StringField(u"出版日期", validators=[Length(0, 32, message=u"长度为0到32个字符")])
-    tags = StringField(u"标签", validators=[Length(0, 128, message=u"长度为0到128个字符")])
-    pages = IntegerField(u"页数")
-    price = StringField(u"定价", validators=[Length(0, 64, message=u"长度为0到32个字符")])
-    binding = StringField(u"装帧", validators=[Length(0, 16, message=u"长度为0到16个字符")])
-    numbers = IntegerField(u"馆藏", validators=[DataRequired(message=u"该项忘了填写了!")])
-    summary = PageDownField(u"内容简介")
-    catalog = PageDownField(u"目录")
-    submit = SubmitField(u"保存更改")
+                       validators=[DataRequired(message=u"Required field"),
+                                   Regexp('[0-9]{13,13}', message=u"ISBN must be 13 digits")])
+    title = StringField(u"Book title",
+                        validators=[DataRequired(message=u"Required field"), Length(1, 128, message=u"Up to 128 characters")])
+    origin_title = StringField(u"Original title", validators=[Length(0, 128, message=u"Up to 128 characters")])
+    subtitle = StringField(u"Subtitle", validators=[Length(0, 128, message=u"Up to 128 characters")])
+    author = StringField(u"Author", validators=[Length(0, 128, message=u"Up to 64 characters")])
+    translator = StringField(u"Translator",
+                             validators=[Length(0, 64, message=u"Up to 64 characters")])
+    publisher = StringField(u"Publisher", validators=[Length(0, 64, message=u"Up to 64 characters")])
+    image = StringField(u"Image location", validators=[Length(0, 128, message=u"Up to 128 characters")])
+    pubdate = StringField(u"Publication date", validators=[Length(0, 32, message=u"Up to 32 characters")])
+    tags = StringField(u"Tags", validators=[Length(0, 128, message=u"Up to 128 characters")])
+    pages = IntegerField(u"Pages")
+    price = StringField(u"Price", validators=[Length(0, 64, message=u"Up to 32 characters")])
+    binding = StringField(u"Binding", validators=[Length(0, 16, message=u"Up to 16 characters")])
+    numbers = IntegerField(u"Collection", validators=[DataRequired(message=u"Required field")])
+    summary = PageDownField(u"Description")
+    catalog = PageDownField(u"Contents")
+    submit = SubmitField(u"Save changes")
 
 
 class AddBookForm(EditBookForm):
     def validate_isbn(self, filed):
         if Book.query.filter_by(isbn=filed.data).count():
-            raise ValidationError(u'已经存在相同的ISBN,无法录入,请仔细核对是否已库存该书籍.')
+            raise ValidationError(u'A book with the same ISBN number already exists. Check whether or not the book has already been entered.')
 
 
 class SearchForm(Form):
     search = StringField(validators=[DataRequired()])
-    submit = SubmitField(u"搜索")
-
-
+    submit = SubmitField(u"Search")

@@ -9,36 +9,36 @@ from wtforms.validators import Email, Length, DataRequired, EqualTo
 
 class LoginForm(Form):
     email = StringField('Email',
-                        validators=[DataRequired(message=u"该项忘了填写了!"), Length(1, 64), Email(message=u"你确定这是 Email ?")])
-    password = PasswordField(u'密码', validators=[DataRequired(message=u"该项忘了填写了!"), Length(6, 32)])
-    remember_me = BooleanField(u"保持我的登入状态", default=True)
-    submit = SubmitField(u'登入')
+                        validators=[DataRequired(message=u"Required field"), Length(1, 64), Email(message=u"Check Email address")])
+    password = PasswordField(u'Password', validators=[DataRequired(message=u"Required field"), Length(6, 32)])
+    remember_me = BooleanField(u"Keep me logged in.", default=True)
+    submit = SubmitField(u'Log in')
 
 
 class RegistrationForm(Form):
     email = StringField('Email',
-                        validators=[DataRequired(message=u"该项忘了填写了!"), Length(1, 64), Email(message=u"你确定这是 Email ?")])
-    name = StringField(u'用户名', validators=[DataRequired(message=u"该项忘了填写了!"), Length(1, 64)])
-    password = PasswordField(u'密码',
-                             validators=[DataRequired(message=u"该项忘了填写了!"), EqualTo('password2', message=u'密码必须匹配'),
+                        validators=[DataRequired(message=u"Required field"), Length(1, 64), Email(message=u"Check Email address")])
+    name = StringField(u'User name', validators=[DataRequired(message=u"Required field"), Length(1, 64)])
+    password = PasswordField(u'Password',
+                             validators=[DataRequired(message=u"Required field"), EqualTo('password2', message=u'Password must match.'),
                                          Length(6, 32)])
-    password2 = PasswordField(u'再次确认密码', validators=[DataRequired(message=u"该项忘了填写了!")])
-    submit = SubmitField(u'注册')
+    password2 = PasswordField(u'Reconfirm Password', validators=[DataRequired(message=u"Required field")])
+    submit = SubmitField(u'Register')
 
-    def validate_email(self, filed):
-        if User.query.filter(db.func.lower(User.email) == db.func.lower(filed.data)).first():
-            raise ValidationError(u'该 Email 已经被注册了')
+    def validate_email(self, field):
+        if User.query.filter(db.func.lower(User.email) == db.func.lower(field.data)).first():
+            raise ValidationError(u'This Email is already registered')
 
 
 class ChangePasswordForm(Form):
-    old_password = PasswordField(u'旧密码', validators=[DataRequired(message=u"该项忘了填写了!")])
-    new_password = PasswordField(u'新密码', validators=[DataRequired(message=u"该项忘了填写了!"),
-                                                     EqualTo('confirm_password', message=u'密码必须匹配'),
+    old_password = PasswordField(u'Old password', validators=[DataRequired(message=u"Required field")])
+    new_password = PasswordField(u'New password', validators=[DataRequired(message=u"Required field"),
+                                                     EqualTo('Confirm_password', message=u'Password must match'),
                                                      Length(6, 32)])
-    confirm_password = PasswordField(u'确认新密码', validators=[DataRequired(message=u"该项忘了填写了!")])
-    submit = SubmitField(u"保存密码")
+    confirm_password = PasswordField(u'Confirm new password', validators=[DataRequired(message=u"Required field")])
+    submit = SubmitField(u"Save password")
 
-    def validate_old_password(self, filed):
+    def validate_old_password(self, field):
         from flask.ext.login import current_user
-        if not current_user.verify_password(filed.data):
-            raise ValidationError(u'原密码错误')
+        if not current_user.verify_password(field.data):
+            raise ValidationError(u'Original password incorrect')

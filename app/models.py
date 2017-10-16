@@ -72,22 +72,22 @@ class User(UserMixin, db.Model):
 
     def borrow_book(self, book):
         if self.logs.filter(Log.returned == 0, Log.return_timestamp < datetime.now()).count() > 0:
-            return False, u"无法借阅,你有超期的图书未归还"
+            return False, u"Cannot borrow, you have overdue books checked out."
         if self.borrowing(book):
-            return False, u'貌似你已经借阅了这本书!!'
+            return False, u'You have already checked out this book.'
         if not book.can_borrow():
-            return False, u'这本书太火了,我们已经没有馆藏了,请等待别人归还以后再来借阅'
+            return False, u'This book is in high demand. No copies are available. Wait for someone to return a copy.'
 
         db.session.add(Log(self, book))
-        return True, u'你成功GET到了一本 %s' % book.title
+        return True, u'You have successfully check out %s' % book.title
 
     def return_book(self, log):
         if log.returned == 1 or log.user_id != self.id:
-            return False, u'没有找到这条记录'
+            return False, u'Record not found.'
         log.returned = 1
         log.return_timestamp = datetime.now()
         db.session.add(log)
-        return True, u'你归还了一本 %s' % log.book.title
+        return True, u'You have returned %s' % log.book.title
 
     def avatar_url(self, _external=False):
         if self.avatar:
@@ -102,7 +102,7 @@ class User(UserMixin, db.Model):
 
     @staticmethod
     def on_changed_about_me(target, value, oldvalue, initiaor):
-        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquate', 'code', 'em', 'i',
+        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code', 'em', 'i',
                         'li', 'ol', 'pre', 'strong', 'ul', 'h1', 'h2', 'h3', 'p']
         target.about_me_html = bleach.linkify(
             bleach.clean(markdown(value, output_format='html'),
@@ -225,7 +225,7 @@ class Book(db.Model):
 
     @staticmethod
     def on_changed_summary(target, value, oldvalue, initiaor):
-        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquate', 'code', 'em', 'i',
+        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code', 'em', 'i',
                         'li', 'ol', 'pre', 'strong', 'ul', 'h1', 'h2', 'h3', 'p']
         target.summary_html = bleach.linkify(
             bleach.clean(markdown(value, output_format='html'),
@@ -233,7 +233,7 @@ class Book(db.Model):
 
     @staticmethod
     def on_changed_catalog(target, value, oldvalue, initiaor):
-        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquate', 'code', 'em', 'i',
+        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code', 'em', 'i',
                         'li', 'ol', 'pre', 'strong', 'ul', 'h1', 'h2', 'h3', 'p']
         target.catalog_html = bleach.linkify(
             bleach.clean(markdown(value, output_format='html'),
