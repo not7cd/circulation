@@ -54,7 +54,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 * **阿卡琳** - *Initial work* - [hufan-akari](https://github.com/hufan-akari)
 * **Justin McLemore** - [justincredble](https://github.com/justincredble/)
-* **Philip Diller** - [?](https://github.com/)
+* **Philip Diller** - [PhilipDiller](https://github.com/PhilipDiller)
 
 See also the list of [contributors](https://github.com/justincredble/circulation/graphs/contributors) who participated in this project.
 
