@@ -49,7 +49,7 @@
                         <li {%- if request.path == url_for('user.index') %} class="active"{%- endif -%} ><a
                                 href="{{ url_for('user.index') }}">Users</a></li>
                         <li {%- if request.path == url_for('log.index') %} class="active"{%- endif -%} ><a
-                                href="{{ url_for('log.index') }}">History</a></li>
+                                href="{{ url_for('log.index') }}">Activity</a></li>
                     {%- endif -%}
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
