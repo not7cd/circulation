@@ -13,4 +13,5 @@ from .auth import auth
 from .user import user
 from .book import book
 from .comment import comment
+from .library import library
 from .log import log

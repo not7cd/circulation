@@ -32,7 +32,7 @@ def index():
     pagination = the_books.paginate(page, per_page=8)
     result_books = pagination.items
     return render_template("book.html", books=result_books, pagination=pagination, search_form=search_form,
-                           title=u"Listing of books")
+                           title=u"List of Books")
 
 
 @book.route('/<book_id>/')
@@ -92,14 +92,13 @@ def edit(book_id):
     form.pageCount.data = book.pageCount
     form.numbers.data = book.numbers
     form.summary.data = book.summary or ""
-    return render_template("book_edit.html", form=form, book=book, title=u"Edit book information")
+    return render_template("book_edit.html", form=form, book=book, title=u"Edit Book Information")
 
 
 @book.route('/add/', methods=['GET', 'POST'])
 @permission_required(Permission.ADD_BOOK)
 def add():
     form = AddBookForm()
-    form.numbers.data = 3
     if form.validate_on_submit():
         new_book = Book(
             isbn=form.isbn.data,
@@ -118,7 +117,7 @@ def add():
         db.session.commit()
         flash(u'%s sucessfully added' % new_book.title, 'success')
         return redirect(url_for('book.detail', book_id=new_book.id))
-    return render_template("book_edit.html", form=form, title=u"Add new book")
+    return render_template("book_edit.html", form=form, title=u"Add New Book")
 
 
 @book.route('/<int:book_id>/delete/')

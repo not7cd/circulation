@@ -52,4 +52,4 @@ def index():
     page = request.args.get('page', 1, type=int)
     pagination = Log.query.filter_by(returned=show).order_by(Log.borrow_timestamp.desc()).paginate(page, per_page=10)
     logs = pagination.items
-    return render_template("logs_info.html", logs=logs, pagination=pagination, title=u"Check out information")
+    return render_template("logs_info.html", logs=logs, pagination=pagination, title=u"Borrow information")

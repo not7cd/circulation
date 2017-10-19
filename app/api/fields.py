@@ -66,6 +66,23 @@ book_list = {
     'current_page': fields.Integer,
     'per_page': fields.Integer,
 }
+library_fields = {
+    'id': fields.Integer,
+    'name': fields.String,
+    'user_id': fields.Integer,
+    'address': fields.String,
+    'public': fields.Boolean,
+    'uri': fields.String(attribute=lambda x: url_for('api.library', library_id=x.id, _external=True)),
+}
+library_list = {
+    'items': fields.List(fields.Nested(library_fields)),
+    'next': fields.String,
+    'prev': fields.String,
+    'total': fields.Integer,
+    'pages_count': fields.Integer,
+    'current_page': fields.Integer,
+    'count': fields.Integer,
+}
 logs_info_fields = {
     'id': fields.Integer,
     'user_id': fields.Integer,

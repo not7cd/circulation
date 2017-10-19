@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{%- block mycontent -%}
+
+    <div class="container-fluid well well-lg">
+
+        <h3>{{ title }}</h3>
+        {{ wtf.quick_form(form,button_map={'submit':'success'}) }}
+    </div>
+
+{%- endblock -%}

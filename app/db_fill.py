@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from app import app, db
-from app.models import User, Book, Log, Role
+from app.models import User, Role
 
 app_ctx = app.app_context()
 app_ctx.push()

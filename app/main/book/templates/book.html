@@ -26,7 +26,7 @@
             <th class="hidden-xs">Collection / Borrowable</th>
             <th class="hidden-xs">Number of times borrowed</th>
             {%- if current_user.is_authenticated -%}
-                <th>Process</th>
+                <th>Action</th>
             {%- endif -%}
         </tr>
         </thead>
@@ -51,7 +51,7 @@
                             {%- else -%}
                                 <a class="btn btn-success"
                                    href="{{ url_for('log.book_borrow',book_id=book.id,next=request.full_path) }}"
-                                        {%- if not book.can_borrow() %} disabled="disabled"{%- endif -%}>Check out</a>
+                                        {%- if not book.can_borrow() %} disabled="disabled"{%- endif -%}>Borrow</a>
                             {%- endif -%}
                         {% endwith %}
                         {% if book.hidden %}

@@ -4,11 +4,11 @@
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
         {% if request.args.get('show',0)!='1' %}
-            <li role="presentation" class="active"><a href="#" role="tab">Record of checkouts</a></li>
-            <li role="presentation"><a href="{{ url_for('log.index',show=1) }}" role="tab">Check out history</a></li>
+            <li role="presentation" class="active"><a href="#" role="tab">Record of borrows</a></li>
+            <li role="presentation"><a href="{{ url_for('log.index',show=1) }}" role="tab">Borrow history</a></li>
         {% else %}
-            <li role="presentation"><a href="{{ url_for('log.index',show=0) }}" role="tab">Record of checkouts</a></li>
-            <li role="presentation" class="active"><a href="#" role="tab">Check out history</a></li>
+            <li role="presentation"><a href="{{ url_for('log.index',show=0) }}" role="tab">Record of borrows</a></li>
+            <li role="presentation" class="active"><a href="#" role="tab">Borrow history</a></li>
         {% endif %}
     </ul>
     <!-- Tab panes -->
@@ -19,11 +19,11 @@
                 <tr>
                     <th>User name</th>
                     <th>User email</th>
-                    <th>Checked out book</th>
+                    <th>Borrowed book</th>
                     <th>Date borrowed</th>
-                    <th>Retrun date</th>
+                    <th>Return date</th>
                     {%- if current_user.is_authenticated -%}
-                        <th>Process</th>
+                        <th>Action</th>
                     {%- endif -%}
                 </tr>
                 </thead>
@@ -79,7 +79,7 @@
                 <tr>
                     <th>User name</th>
                     <th>User email</th>
-                    <th>Checked out book</th>
+                    <th>Borrowed book</th>
                     <th>Date borrowed</th>
                     <th>Return date</th>
                 </tr>

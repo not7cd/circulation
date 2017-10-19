@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% from "bootstrap/pagination.html" import render_pagination %}
+{% block mycontent %}
+    <table class="table table-striped table-hover">
+        <h1 class="page-header">{{ title }}</h1>
+        <thead>
+        <tr>
+            <th>Library Name</th>
+            <th>Address</th>
+            <th>Public</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for library in libraries %}
+            <tr class="animated fadeIn delay-{{ loop.index0 }}">
+                <td><a href="{{ url_for('library.detail',library_id=library.id) }}">{{ library.name }}</a></td>
+                <td>{{ library.address }}</td>
+                <td>{{ library.public }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% if pagination and pagination.pages > 1 %}
+        <div class="container-fluid text-center">
+            {{ render_pagination(pagination) }}
+        </div>
+    {% endif %}
+{% endblock %}

@@ -15,10 +15,10 @@ pagedown = PageDown(app)
 avatars = UploadSet('avatars', IMAGES)
 configure_uploads(app, avatars)
 
-from app.main import main, auth, user, book, comment, log
+from app.main import main, auth, user, book, comment, library, log
 from app.api import api_bp
 
-for blueprint in [main, auth, user, book, comment, log, api_bp]:
+for blueprint in [main, auth, user, book, comment, library, log, api_bp]:
     app.register_blueprint(blueprint)
 
 from app import models

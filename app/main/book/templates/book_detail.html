@@ -79,7 +79,7 @@
                         <a class="btn btn-success"
                            href="{{ url_for('log.book_borrow',book_id=book.id,next=request.full_path) }}"
                            {%- if not book.can_borrow() -%}disabled="disabled"{%- endif -%}>
-                            Check out
+                            Borrow
                         </a>
                     {%- endif -%}
                 {%- endwith -%}

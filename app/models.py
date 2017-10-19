@@ -72,14 +72,14 @@ class User(UserMixin, db.Model):
 
     def borrow_book(self, book):
         if self.logs.filter(Log.returned == 0, Log.return_timestamp < datetime.now()).count() > 0:
-            return False, u"Cannot borrow, you have overdue books checked out."
+            return False, u"Cannot borrow, you have overdue books borrowed."
         if self.borrowing(book):
-            return False, u'You have already checked out this book.'
+            return False, u'You have already borrowed this book.'
         if not book.can_borrow():
             return False, u'This book is in high demand. No copies are available. Wait for someone to return a copy.'
 
         db.session.add(Log(self, book))
-        return True, u'You have successfully check out %s' % book.title
+        return True, u'You have successfully borrowed %s' % book.title
 
     def return_book(self, log):
         if log.returned == 1 or log.user_id != self.id:
@@ -130,8 +130,11 @@ class Permission(object):
     DELETE_OTHERS_COMMENT = 0x08
     UPDATE_OTHERS_INFORMATION = 0x10
     UPDATE_BOOK_INFORMATION = 0x20
+    UPDATE_LIBRARY_INFORMATION = 0x30
     ADD_BOOK = 0x40
+    ADD_LIBRARY = 0x60
     DELETE_BOOK = 0x80
+    DELETE_LIBRARY = 0x90
     ADMINISTER = 0x100
 
 
@@ -238,6 +241,7 @@ class Log(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     book_id = db.Column(db.Integer, db.ForeignKey('books.id'))
+    library_id = db.Column(db.Integer, db.ForeignKey('library.id'))
     borrow_timestamp = db.Column(db.DateTime, default=datetime.now())
     return_timestamp = db.Column(db.DateTime, default=datetime.now())
     returned = db.Column(db.Boolean, default=0)
@@ -289,3 +293,20 @@ class Tag(db.Model):
 
     def __repr__(self):
         return u'<Tag %s>' % self.name
+
+
+class Library(db.Model):
+    __tablename__ = 'library'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(128))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    address = db.Column(db.String(128))
+    public = db.Column(db.Boolean, default=0)
+
+    logs = db.relationship('Log',
+                           backref=db.backref('library', lazy='joined'),
+                           lazy='dynamic',
+                           cascade='all, delete-orphan')
+
+    def __repr__(self):
+        return u'<Library %r - %r>' % (self.user.name, self.name)

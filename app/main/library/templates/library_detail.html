@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% from "bootstrap/pagination.html" import render_pagination %}
+{% block mycontent %}
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-1 animated fadeIn">
+                <h1 class="page-header">{{ library.name }}</h1>
+
+                <p>Address: {{ library.address }}</p>
+                <p>Public: {{ library.public }}</p>
+
+            </div>
+        </div>
+
+
+    </div>
+
+{% endblock %}
+{% block scripts %}
+    {{ super() }}
+    <script>
+        $('[data-toggle="tooltip"]').tooltip()
+    </script>
+{% endblock %}
