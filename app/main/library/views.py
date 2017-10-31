@@ -65,7 +65,8 @@ def add():
         new_library = Library(
             name=form.name.data,
             address=form.address.data,
-            public=form.public.data)
+            public=form.public.data,
+            user_id=current_user.id)
         db.session.add(new_library)
         db.session.commit()
         flash(u'%s sucessfully added' % new_library.name, 'success')
