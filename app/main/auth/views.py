@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from app import db
-from app.models import User
+from app.models import User, Library
 from flask import render_template, url_for, flash, redirect, request
 from flask.ext.login import login_user, logout_user, login_required, current_user
 from . import auth
@@ -32,13 +32,19 @@ def logout():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        the_user = User(email=form.email.data,
-                        name=form.name.data,
-                        password=form.password.data)
+        the_user = User(
+            email=form.email.data,
+            name=form.name.data,
+            password=form.password.data)
         db.session.add(the_user)
         db.session.commit()
         flash(u'Registration successful. Welcome %s!' % form.name.data, 'success')
         login_user(the_user)
+        new_library = Library(
+            name=form.name.data + str("'s Library"),
+            user_id=current_user.id)
+        db.session.add(new_library)
+        db.session.commit()
         return redirect(request.args.get('next') or url_for('main.index'))
     return render_template('register.html', form=form, title=u"Register")
 
