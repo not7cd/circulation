@@ -56,13 +56,13 @@
     <div class="well well-lg" id="log">
         <ul class="nav nav-tabs" role="tablist">
             {% if request.args.get('show',0)!='1' %}
-                <li role="presentation" class="active"><a href="#log" role="tab">Record of borrowed books</a></li>
+                <li role="presentation" class="active"><a href="#log" role="tab">Currently Borrowed</a></li>
                 <li role="presentation"><a href="{{ url_for('user.detail',user_id=user.id,show=1,_anchor='log') }}"
                                            role="tab">Borrowing history</a>
                 </li>
             {% else %}
                 <li role="presentation"><a href="{{ url_for('user.detail',user_id=user.id,show=0,_anchor='log') }}"
-                                           role="tab">Record of borrowed books</a>
+                                           role="tab">Currently Borrowed</a>
                 </li>
                 <li role="presentation" class="active"><a href="#log" role="tab">Borrowing history</a></li>
             {% endif %}
