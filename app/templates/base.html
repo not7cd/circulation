@@ -54,15 +54,22 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {%- if current_user.is_authenticated -%}
-                        <li {% if request.path == url_for('user.detail',user_id=current_user.id) -%}
-                            class="active"{%- endif -%} >
-                            <a href="{{ url_for('user.detail',user_id=current_user.id) }}">{{ current_user.name }}</a>
-                        </li>
-                        <li><a href="{{ url_for('auth.logout') }}">Log out</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ current_user.name }}
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" {% if request.path == url_for('user.detail',user_id=current_user.id) -%}
+                                class="active"{%- endif -%} href="{{ url_for('user.detail',user_id=current_user.id) }}">Profile</a>
+                            <a class="dropdown-item" href=#>Help</a>
+                            <a class="dropdown-item" href="{{ url_for('auth.logout') }}">Log out</a>
+                        </div>
+                    </li>
                     {%- else -%}
-                        <li><a href="{{ url_for('auth.login') }}">Log in</a></li>
+                    <li><a href="{{ url_for('auth.login') }}">Log in</a></li>
                     {%- endif -%}
                 </ul>
+
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
