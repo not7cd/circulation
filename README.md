@@ -17,23 +17,23 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Installing
 ```sh
-<!-- Clone Circulation repository -->
 git clone https://github.com/justincredble/circulation.git
 
-<!-- Change into local repo -->
 cd circulation
 
-<!-- Create virtual environment -->
 virtualenv ./venv
 
-<!-- Activate new venv -->
 source ./venv/bin/activate
 
-<!-- Install dependencies -->
 pip install -r requirements.txt
 
-<!-- Run the web app -->
 python ./run.py
+```
+
+or with Pipenv
+```bash
+pipenv install
+pipenv run python run.py
 ```
 
 ## Built With
