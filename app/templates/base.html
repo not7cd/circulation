@@ -14,6 +14,7 @@
 
 {%- block styles -%}
     {{ super() }}
+    <link href="{{ url_for('static',filename='css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ url_for('static',filename='css/main.css') }}" rel="stylesheet">
 {%- endblock -%}
 
