@@ -14,4 +14,4 @@ install:
 script:
   - docker ps | grep -q circulation
   - pipenv run pytest tests
-  - pipenv run flake8 --ignore=E501,F401,E128,E402,E731,F821 app
+  - pipenv run flake8 --ignore=E501,F401,E128,E402,E731,F821 circulation

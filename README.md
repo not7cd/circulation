@@ -20,14 +20,14 @@ These instructions will get you a copy of the project up and running on your loc
 ```bash
 # create virtualenv and enterit
 pip install -r requirements.txt
-python run.py
+python -m circulation
 ```
 
 or with Pipenv
 
 ```bash
 pipenv install
-pipenv run python run.py
+pipenv run python -m circulation
 ```
 
 ## Built With

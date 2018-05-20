@@ -13,4 +13,4 @@ USER nobody
 EXPOSE 8000
 VOLUME ["/data"]
 
-CMD ["gunicorn", "run:app", "-b 0.0.0.0:8000"]
+CMD ["gunicorn", "circulation:app", "-b 0.0.0.0:8000"]

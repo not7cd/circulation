@@ -1,7 +1,7 @@
 import os
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-DB_PATH = os.environ.get('DB_PATH', os.path.join(basedir, 'app.db'))
+DB_PATH = os.environ.get('DB_PATH', os.path.join(basedir, 'circulation.db'))
 
 MAX_CONTENT_LENGTH = 1024 * 1024
 
