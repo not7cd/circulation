@@ -1,0 +1,17 @@
+language: python
+python:
+  - "3.6"
+
+services:
+  - docker
+
+install:
+  - pip install pipenv
+  - pipenv install --dev
+  - docker build -t circulation .
+  - docker run -d -p 127.0.0.1:8000:8000 --name circulation circulation
+
+script:
+  - docker ps | grep -q circulation
+  - pipenv run pytest tests
+  - pipenv run flake8 --ignore=E501,F401,E128,E402,E731,F821 app
