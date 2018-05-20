@@ -57,10 +57,6 @@ textarea {
     resize: vertical;
 }
 
-html, body, main {
-    font-family: -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-
 #accordion h1 {
     font-size: 3rem !important;
 }
