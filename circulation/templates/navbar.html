@@ -17,13 +17,15 @@
             <ul class="nav navbar-nav">
                 <li {%- if request.path == url_for('book.index') %} class="active"{%- endif -%} ><a
                         href="{{ url_for('book.index') }}">Books</a></li>
+            {# TODO: another hack for anon to add books #}
+{#                    {%- if current_user.can(Permission.ADD_BOOK) -%}#}
+                        <li {%- if request.path == url_for('book.add') %} class="active"{%- endif -%} ><a
+                                href="{{ url_for('book.add') }}">Add book</a></li>
+{#                    {%- endif -%}#}
                 {%- if current_user.is_authenticated -%}
                     <li {%- if request.path == url_for('library.index') %} class="active"{%- endif -%} ><a
                             href="{{ url_for('library.index') }}">Libraries</a></li>
-                    {%- if current_user.can(Permission.ADD_BOOK) -%}
-                        <li {%- if request.path == url_for('book.add') %} class="active"{%- endif -%} ><a
-                                href="{{ url_for('book.add') }}">Add book</a></li>
-                    {%- endif -%}
+
                     <li {%- if request.path == url_for('library.add') %} class="active"{%- endif -%} ><a
                             href="{{ url_for('library.add') }}">Add library</a></li>
                     <li {%- if request.path == url_for('user.index') %} class="active"{%- endif -%} ><a

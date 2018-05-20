@@ -120,7 +120,8 @@ db.event.listen(User.about_me, 'set', User.on_changed_about_me)
 
 class AnonymousUser(AnonymousUserMixin):
     def can(self, permissions):
-        return False
+        # TODO: hack to give anon ability to add books
+        return 0x40 == permissions
 
     def is_administrator(self):
         return False
