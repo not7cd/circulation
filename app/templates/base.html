@@ -25,12 +25,13 @@
 {%- endblock -%}
 
 {%- block content -%}
-    {%- block alerts -%}
-        {% include "alerts.html" %}
-    {%- endblock -%}
-        <main class="container-fluid Site-content">
-            {%- block mycontent -%}{%- endblock -%}
-        </main>
+    <main class="container-fluid Site-content">
+        {%- block alerts -%}
+            {% include "alerts.html" %}
+        {%- endblock -%}
+        {%- block mycontent -%}
+        {%- endblock -%}
+    </main>
     {%- block footer -%}
         {% include "footer.html" %}
     {%- endblock -%}
