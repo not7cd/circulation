@@ -139,144 +139,144 @@ comment_detail_fields = dict(comment_fields, **{
     'book': fields.Nested(book_fields, attribute=lambda x: x.book),
 })
 
-user_detail_fields = dict \
-    (user_fields, **{
-        'borrowing_logs': fields.Nested(
-            {
-                'items': fields.List(fields.Nested(logs_info_fields),
-                                     attribute=lambda this: this.items),
-                'next': fields.String(
-                    attribute=lambda this: url_for('api.loglist',
-                                                   user_id=this.items[
-                                                       0].book_id, returned=0,
-                                                   page=2,
-                                                   count=default_per_page,
-                                                   _external=True) if this.has_next else None),
-                'prev': fields.String(attribute=''),
-                'total': fields.Integer,
-                'pages_count': fields.Integer(attribute='pages'),
-                'current_page': fields.Integer(default=1),
-                'per_page': fields.Integer,
-            }, attribute=lambda this: this.logs.filter_by(returned=0).order_by(
-                Log.id.desc()).paginate(page=1,
+user_detail_fields = dict(user_fields, **{
+    'borrowing_logs': fields.Nested(
+        {
+            'items': fields.List(fields.Nested(logs_info_fields),
+                                 attribute=lambda this: this.items),
+            'next': fields.String(
+                attribute=lambda this: url_for('api.loglist',
+                                               user_id=this.items[
+                                                   0].book_id, returned=0,
+                                               page=2,
+                                               count=default_per_page,
+                                               _external=True) if this.has_next else None),
+            'prev': fields.String(attribute=''),
+            'total': fields.Integer,
+            'pages_count': fields.Integer(attribute='pages'),
+            'current_page': fields.Integer(default=1),
+            'per_page': fields.Integer,
+        }, attribute=lambda this: this.logs.filter_by(returned=0).order_by(
+            Log.id.desc()).paginate(page=1,
+                                    per_page=default_per_page)),
+
+    'borrowed_logs': fields.Nested(
+        {
+            'items': fields.List(fields.Nested(logs_info_fields),
+                                 attribute=lambda this: this.items),
+            'next': fields.String(
+                attribute=lambda this: url_for('api.loglist',
+                                               user_id=this.items[
+                                                   0].book_id, returned=1,
+                                               page=2,
+                                               per_page=default_per_page,
+                                               _external=True) if this.has_next else None),
+            'prev': fields.String(attribute=''),
+            'total': fields.Integer,
+            'pages_count': fields.Integer(attribute='pages'),
+            'current_page': fields.Integer(default=1),
+            'per_page': fields.Integer,
+        }, attribute=lambda this: this.logs.filter_by(returned=1).order_by(
+            Log.id.desc()).paginate(page=1,
+                                    per_page=default_per_page)),
+
+    'comments': fields.Nested(
+        {
+            'items': fields.List(fields.Nested(comment_fields),
+                                 attribute=lambda this: this.items),
+            'next': fields.String(
+                attribute=lambda this: url_for('api.commentlist',
+                                               user_id=this.items[
+                                                   0].book_id, deleted=0,
+                                               page=2,
+                                               per_page=default_per_page,
+                                               _external=True) if this.has_next else None),
+            'prev': fields.String(attribute=''),
+            'total': fields.Integer,
+            'pages_count': fields.Integer(attribute='pages'),
+            'current_page': fields.Integer(default=1),
+            'per_page': fields.Integer,
+        },
+        attribute=lambda this: this.comments.filter_by(deleted=0).order_by(
+            Comment.id.desc()).paginate(page=1,
                                         per_page=default_per_page)),
 
-        'borrowed_logs': fields.Nested(
-            {
-                'items': fields.List(fields.Nested(logs_info_fields),
-                                     attribute=lambda this: this.items),
-                'next': fields.String(
-                    attribute=lambda this: url_for('api.loglist',
-                                                   user_id=this.items[
-                                                       0].book_id, returned=1,
-                                                   page=2,
-                                                   per_page=default_per_page,
-                                                   _external=True) if this.has_next else None),
-                'prev': fields.String(attribute=''),
-                'total': fields.Integer,
-                'pages_count': fields.Integer(attribute='pages'),
-                'current_page': fields.Integer(default=1),
-                'per_page': fields.Integer,
-            }, attribute=lambda this: this.logs.filter_by(returned=1).order_by(
-                Log.id.desc()).paginate(page=1,
-                                        per_page=default_per_page)),
+}
+)
 
-        'comments': fields.Nested(
-            {
-                'items': fields.List(fields.Nested(comment_fields),
-                                     attribute=lambda this: this.items),
-                'next': fields.String(
-                    attribute=lambda this: url_for('api.commentlist',
-                                                   user_id=this.items[
-                                                       0].book_id, deleted=0,
-                                                   page=2,
-                                                   per_page=default_per_page,
-                                                   _external=True) if this.has_next else None),
-                'prev': fields.String(attribute=''),
-                'total': fields.Integer,
-                'pages_count': fields.Integer(attribute='pages'),
-                'current_page': fields.Integer(default=1),
-                'per_page': fields.Integer,
-            },
-            attribute=lambda this: this.comments.filter_by(deleted=0).order_by(
-                Comment.id.desc()).paginate(page=1,
-                                            per_page=default_per_page)),
+book_detail_fields = dict(
+    book_fields,
+    **{'summary': fields.String,
+       'summary_html': fields.String,
+       'catalog': fields.String,
+       'catalog_html': fields.String,
+       'borrowing_logs': fields.Nested(
+           {
+               'items': fields.List(fields.Nested(logs_info_fields),
+                                    attribute=lambda this: this.items),
+               'next': fields.String(
+                   attribute=lambda this: url_for('api.loglist',
+                                                  book_id=this.items[
+                                                      0].book_id,
+                                                  returned=0, page=2,
+                                                  count=default_per_page,
+                                                  _external=True) if this.has_next else None),
+               'prev': fields.String(attribute=''),
+               'total': fields.Integer,
+               'pages_count': fields.Integer(attribute='pages'),
+               'current_page': fields.Integer(default=1),
+               'per_page': fields.Integer,
+           }, attribute=lambda this: this.logs.filter_by(
+               returned=0).order_by(
+               Log.id.desc()).paginate(page=1,
+                                       per_page=default_per_page)),
 
-    }
-     )
-book_detail_fields = \
-    dict(book_fields,
-         **{'summary': fields.String,
-            'summary_html': fields.String,
-            'catalog': fields.String,
-            'catalog_html': fields.String,
-            'borrowing_logs': fields.Nested(
-                {
-                    'items': fields.List(fields.Nested(logs_info_fields),
-                                         attribute=lambda this: this.items),
-                    'next': fields.String(
-                        attribute=lambda this: url_for('api.loglist',
-                                                       book_id=this.items[
-                                                           0].book_id,
-                                                       returned=0, page=2,
-                                                       count=default_per_page,
-                                                       _external=True) if this.has_next else None),
-                    'prev': fields.String(attribute=''),
-                    'total': fields.Integer,
-                    'pages_count': fields.Integer(attribute='pages'),
-                    'current_page': fields.Integer(default=1),
-                    'per_page': fields.Integer,
-                }, attribute=lambda this: this.logs.filter_by(
-                    returned=0).order_by(
-                    Log.id.desc()).paginate(page=1,
-                                            per_page=default_per_page)),
+       'borrowed_logs': fields.Nested(
+           {
+               'items': fields.List(fields.Nested(logs_info_fields),
+                                    attribute=lambda this: this.items),
+               'next': fields.String(
+                   attribute=lambda this: url_for('api.loglist',
+                                                  book_id=this.items[
+                                                      0].book_id,
+                                                  returned=1, page=2,
+                                                  per_page=default_per_page,
+                                                  _external=True) if this.has_next else None),
+               'prev': fields.String(attribute=''),
+               'total': fields.Integer,
+               'pages_count': fields.Integer(attribute='pages'),
+               'current_page': fields.Integer(default=1),
+               'per_page': fields.Integer,
+           }, attribute=lambda this: this.logs.filter_by(
+               returned=1).order_by(
+               Log.id.desc()).paginate(page=1,
+                                       per_page=default_per_page)),
 
-            'borrowed_logs': fields.Nested(
-                {
-                    'items': fields.List(fields.Nested(logs_info_fields),
-                                         attribute=lambda this: this.items),
-                    'next': fields.String(
-                        attribute=lambda this: url_for('api.loglist',
-                                                       book_id=this.items[
-                                                           0].book_id,
-                                                       returned=1, page=2,
-                                                       per_page=default_per_page,
-                                                       _external=True) if this.has_next else None),
-                    'prev': fields.String(attribute=''),
-                    'total': fields.Integer,
-                    'pages_count': fields.Integer(attribute='pages'),
-                    'current_page': fields.Integer(default=1),
-                    'per_page': fields.Integer,
-                }, attribute=lambda this: this.logs.filter_by(
-                    returned=1).order_by(
-                    Log.id.desc()).paginate(page=1,
-                                            per_page=default_per_page)),
+       'comments': fields.Nested(
+           {
+               'items': fields.List(fields.Nested(comment_fields),
+                                    attribute=lambda this: this.items),
+               'next': fields.String(
+                   attribute=lambda this: url_for('api.commentlist',
+                                                  book_id=this.items[
+                                                      0].book_id,
+                                                  deleted=0,
+                                                  page=2,
+                                                  per_page=default_per_page,
+                                                  _external=True) if this.has_next else None),
+               'prev': fields.String(attribute=''),
+               'total': fields.Integer,
+               'pages_count': fields.Integer(attribute='pages'),
+               'current_page': fields.Integer(default=1),
+               'per_page': fields.Integer,
+           },
+           attribute=lambda this: this.comments.filter_by(
+               deleted=0).order_by(
+               Comment.id.desc()).paginate(page=1,
+                                           per_page=default_per_page)),
 
-            'comments': fields.Nested(
-                {
-                    'items': fields.List(fields.Nested(comment_fields),
-                                         attribute=lambda this: this.items),
-                    'next': fields.String(
-                        attribute=lambda this: url_for('api.commentlist',
-                                                       book_id=this.items[
-                                                           0].book_id,
-                                                       deleted=0,
-                                                       page=2,
-                                                       per_page=default_per_page,
-                                                       _external=True) if this.has_next else None),
-                    'prev': fields.String(attribute=''),
-                    'total': fields.Integer,
-                    'pages_count': fields.Integer(attribute='pages'),
-                    'current_page': fields.Integer(default=1),
-                    'per_page': fields.Integer,
-                },
-                attribute=lambda this: this.comments.filter_by(
-                    deleted=0).order_by(
-                    Comment.id.desc()).paginate(page=1,
-                                                per_page=default_per_page)),
-
-            }
-         )
+       }
+)
 
 logs_info_detail_fields = dict(logs_info_fields, **{
     'user': fields.Nested(user_fields, attribute=lambda x: x.user),

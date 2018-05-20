@@ -33,8 +33,8 @@ class RegistrationForm(Form):
 class ChangePasswordForm(Form):
     old_password = PasswordField(u'Old password', validators=[DataRequired(message=u"Required field")])
     new_password = PasswordField(u'New password', validators=[DataRequired(message=u"Required field"),
-                                                     EqualTo('Confirm_password', message=u'Password must match'),
-                                                     Length(6, 32)])
+                                 EqualTo('Confirm_password', message=u'Password must match'),
+                                 Length(6, 32)])
     confirm_password = PasswordField(u'Confirm new password', validators=[DataRequired(message=u"Required field")])
     submit = SubmitField(u"Save password")
 

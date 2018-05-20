@@ -9,7 +9,7 @@ from wtforms.validators import Length, DataRequired, Regexp
 
 class EditLibraryForm(Form):
     name = StringField(u"Library name",
-                        validators=[DataRequired(message=u"Required field"), Length(1, 128, message=u"Up to 128 characters")])
+                       validators=[DataRequired(message=u"Required field"), Length(1, 128, message=u"Up to 128 characters")])
     address = StringField(u"Address", validators=[Length(0, 128, message=u"Up to 128 characters")])
     public = BooleanField(u"Make public", default="checked")
     submit = SubmitField(u"Save")
