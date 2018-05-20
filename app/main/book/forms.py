@@ -4,11 +4,11 @@ from flask.ext.pagedown.fields import PageDownField
 from flask.ext.wtf import Form
 from wtforms import StringField, SubmitField, IntegerField
 from wtforms import ValidationError
-from wtforms.validators import Length, DataRequired, Regexp
+from wtforms.validators import Length, DataRequired, Regexp, Optional
 
 
 class EditBookForm(Form):
-    isbn = StringField(u"ISBN",
+    isbn = StringField(u"ISBN (without hypens)",
                        validators=[DataRequired(message=u"Required field"),
                                    Regexp('[0-9]{13,13}', message=u"ISBN must be 13 digits")])
     title = StringField(u"Book Title",
@@ -21,8 +21,8 @@ class EditBookForm(Form):
     thumbnail = StringField(u"Cover Image URL", validators=[Length(0, 128, message=u"Up to 128 characters")])
     publishedDate = StringField(u"Publication Date", validators=[Length(0, 32, message=u"Up to 32 characters")])
     tags = StringField(u"Tags", validators=[Length(0, 128, message=u"Up to 128 characters")])
-    pageCount = IntegerField(u"Page Count")
-    numbers = IntegerField(u"Collection", validators=[DataRequired(message=u"Required field")])
+    pageCount = IntegerField(u"Page Count", validators=[Optional()])
+    numbers = IntegerField(u"Number of books in collection", validators=[DataRequired(message=u"Required field")])
     summary = PageDownField(u"Description")
     submit = SubmitField(u"Save")
 

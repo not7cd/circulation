@@ -182,7 +182,7 @@ class Book(db.Model):
     publisher = db.Column(db.String(64))
     thumbnail = db.Column(db.String(128))
     publishedDate = db.Column(db.String(32))
-    pageCount = db.Column(db.Integer)
+    pageCount = db.Column(db.Integer, nullable=True)
     numbers = db.Column(db.Integer, default=5)
     summary = db.deferred(db.Column(db.Text, default=""))
     summary_html = db.deferred(db.Column(db.Text))
