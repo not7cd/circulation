@@ -4,7 +4,7 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import Length, DataRequired, URL
 from flask.ext.pagedown.fields import PageDownField
 from flask.ext.wtf.file import FileField, FileAllowed
-from circulation import avatars
+from circulation.web import avatars
 
 
 class EditProfileForm(Form):

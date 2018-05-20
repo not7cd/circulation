@@ -8,7 +8,7 @@ from flask.ext.login import UserMixin, AnonymousUserMixin
 from markdown import markdown
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from circulation import db, lm, avatars
+from circulation.web import db, lm, avatars
 
 
 class User(UserMixin, db.Model):

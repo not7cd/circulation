@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from circulation import db
+from circulation.web import db
 from circulation.models import User
 from flask.ext.wtf import Form
 from wtforms import StringField, PasswordField, SubmitField, BooleanField

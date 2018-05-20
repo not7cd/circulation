@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from circulation import app, db
+from circulation.web import app, db
 from circulation.models import User, Role
 
 app_ctx = app.app_context()

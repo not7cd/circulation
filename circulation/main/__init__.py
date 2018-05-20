@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from circulation import lm
+from circulation.web import lm
 from circulation.models import User
 
 

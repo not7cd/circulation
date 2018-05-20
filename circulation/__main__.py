@@ -1,3 +1,3 @@
-from circulation import app
+from circulation.web import app
 
 app.run(debug=True, host='0.0.0.0')

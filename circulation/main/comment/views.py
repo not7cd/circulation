@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from circulation import db
+from circulation.web import db
 from circulation.models import Book, Comment, Permission
 from flask import url_for, flash, redirect, request, abort
 from flask.ext.login import login_required, current_user
