@@ -1,16 +1,17 @@
 # -*- coding:utf-8 -*-
-from app import db
-from app.models import User, Library, Log, Permission
-from flask import render_template, url_for, flash, redirect, request, abort
+from flask import render_template, url_for, flash, redirect, request
 from flask.ext.login import login_required, current_user
+
+from app import db
+from app.models import Library, Log, Permission
 from . import library
 from .forms import SearchForm, EditLibraryForm, AddLibraryForm
 from ..decorators import admin_required, permission_required
 
+
 @library.route('/')
 @login_required
 def index():
-    search_word = request.args.get('search', None)
     search_form = SearchForm()
     page = request.args.get('page', 1, type=int)
 
@@ -18,7 +19,8 @@ def index():
 
     pagination = the_libraries.paginate(page, per_page=8)
     result_libraries = pagination.items
-    return render_template("library.html", libraries=result_libraries, pagination=pagination, search_form=search_form,
+    return render_template("library.html", libraries=result_libraries,
+                           pagination=pagination, search_form=search_form,
                            title=u"List of Libraries")
 
 
@@ -35,7 +37,8 @@ def detail(library_id):
         .order_by(Log.borrow_timestamp.desc()).paginate(page, per_page=5)
     logs = pagination.items
 
-    return render_template("library_detail.html", library=the_library, logs=logs, pagination=pagination,
+    return render_template("library_detail.html", library=the_library,
+                           logs=logs, pagination=pagination,
                            title=u"Library Name: " + the_library.name)
 
 
@@ -55,7 +58,8 @@ def edit(library_id):
     form.name.data = library.name
     form.address.data = library.address
     form.public.data = library.public
-    return render_template("library_edit.html", form=form, library=library, title=u"Edit Library Information")
+    return render_template("library_edit.html", form=form, library=library,
+                           title=u"Edit Library Information")
 
 
 @library.route('/add/', methods=['GET', 'POST'])
@@ -71,7 +75,8 @@ def add():
         db.session.commit()
         flash(u'%s sucessfully added' % new_library.name, 'success')
         return redirect(url_for('library.detail', library_id=new_library.id))
-    return render_template("library_edit.html", form=form, title=u"Add New Library")
+    return render_template("library_edit.html", form=form,
+                           title=u"Add New Library")
 
 
 @library.route('/<int:library_id>/delete/')
@@ -82,7 +87,8 @@ def delete(library_id):
     db.session.add(the_library)
     db.session.commit()
     flash(u'Library record.', 'info')
-    return redirect(request.args.get('next') or url_for('library.detail', library_id=library_id))
+    return redirect(request.args.get('next') or url_for('library.detail',
+                                                        library_id=library_id))
 
 
 @library.route('/<int:library_id>/put_back/')
@@ -93,4 +99,5 @@ def put_back(library_id):
     db.session.add(the_library)
     db.session.commit()
     flash(u'Library recovered', 'info')
-    return redirect(request.args.get('next') or url_for('library.detail', library_id=library_id))
+    return redirect(request.args.get('next') or url_for('library.detail',
+                                                        library_id=library_id))

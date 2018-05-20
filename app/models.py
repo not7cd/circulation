@@ -3,11 +3,12 @@ import json
 from datetime import datetime, timedelta
 
 import bleach
-from app import db, lm, avatars
 from flask import current_app, url_for
 from flask.ext.login import UserMixin, AnonymousUserMixin
 from markdown import markdown
 from werkzeug.security import generate_password_hash, check_password_hash
+
+from app import db, lm, avatars
 
 
 class User(UserMixin, db.Model):
@@ -45,8 +46,7 @@ class User(UserMixin, db.Model):
         self.member_since = datetime.now()
 
     def can(self, permissions):
-        return self.role is not None and \
-               (self.role.permissions & permissions) == permissions
+        return self.role is not None and (self.role.permissions & permissions) == permissions
 
     def is_administrator(self):
         return self.can(Permission.ADMINISTER)
@@ -68,10 +68,12 @@ class User(UserMixin, db.Model):
         return self.logs.filter_by(book_id=book.id, returned=0).first()
 
     def can_borrow_book(self):
-        return self.logs.filter(Log.returned == 0, Log.return_timestamp < datetime.now()).count() == 0
+        return self.logs.filter(Log.returned == 0,
+                                Log.return_timestamp < datetime.now()).count() == 0
 
     def borrow_book(self, book):
-        if self.logs.filter(Log.returned == 0, Log.return_timestamp < datetime.now()).count() > 0:
+        if self.logs.filter(Log.returned == 0,
+                            Log.return_timestamp < datetime.now()).count() > 0:
             return False, u"Cannot borrow, you have overdue books borrowed."
         if self.borrowing(book):
             return False, u'You have already borrowed this book.'
@@ -95,15 +97,19 @@ class User(UserMixin, db.Model):
             if avatar_json['use_out_url']:
                 return avatar_json['url']
             else:
-                return url_for('_uploads.uploaded_file', setname=avatars.name, filename=avatar_json['url'],
+                return url_for('_uploads.uploaded_file', setname=avatars.name,
+                               filename=avatar_json['url'],
                                _external=_external)
         else:
-            return url_for('static', filename='img/avatar.png', _external=_external)
+            return url_for('static', filename='img/avatar.png',
+                           _external=_external)
 
     @staticmethod
     def on_changed_about_me(target, value, oldvalue, initiaor):
-        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code', 'em', 'i',
-                        'li', 'ol', 'pre', 'strong', 'ul', 'h1', 'h2', 'h3', 'p']
+        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
+                        'em', 'i',
+                        'li', 'ol', 'pre', 'strong', 'ul', 'h1', 'h2', 'h3',
+                        'p']
         target.about_me_html = bleach.linkify(
             bleach.clean(markdown(value, output_format='html'),
                          tags=allowed_tags, strip=True))
@@ -219,12 +225,15 @@ class Book(db.Model):
         return (not self.hidden) and self.can_borrow_number() > 0
 
     def can_borrow_number(self):
-        return self.numbers - Log.query.filter_by(book_id=self.id, returned=0).count()
+        return self.numbers - Log.query.filter_by(book_id=self.id,
+                                                  returned=0).count()
 
     @staticmethod
     def on_changed_summary(target, value, oldvalue, initiaor):
-        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code', 'em', 'i',
-                        'li', 'ol', 'pre', 'strong', 'ul', 'h1', 'h2', 'h3', 'p']
+        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
+                        'em', 'i',
+                        'li', 'ol', 'pre', 'strong', 'ul', 'h1', 'h2', 'h3',
+                        'p']
         target.summary_html = bleach.linkify(
             bleach.clean(markdown(value, output_format='html'),
                          tags=allowed_tags, strip=True))
@@ -277,7 +286,8 @@ class Comment(db.Model):
 
 
 book_tag = db.Table('books_tags',
-                    db.Column('book_id', db.Integer, db.ForeignKey('books.id')),
+                    db.Column('book_id', db.Integer,
+                              db.ForeignKey('books.id')),
                     db.Column('tag_id', db.Integer, db.ForeignKey('tags.id'))
                     )
 
