@@ -3,6 +3,8 @@
 
 Circulation encourages people to re-use resources which are too often single use. How many of the books in your home will only be read by one person when there is no reason they could not be read by many people? By making our personal resources available to our neighbors, we hope to foster exchanges in our communities.
 
+![main page](screenshot.png)
+
 ## Key Features
   * ~~Support for multiple languages~~
   * Mobile responsive

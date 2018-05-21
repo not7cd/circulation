@@ -30,5 +30,5 @@ from circulation import models
 
 exists_db = os.path.isfile(app.config['DB_PATH'])
 if not exists_db:
-    logger.warning('no db found under ', app.config['DB_PATH'])
+    logger.warning('no db found under %s', app.config['DB_PATH'])
     from . import db_fill
