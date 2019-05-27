@@ -2,9 +2,9 @@
 from flask import render_template, url_for, flash, redirect, request, abort, g
 from flask_login import login_required, current_user
 from circulation.models import User, Log, Permission
-from .forms import EditProfileForm, AvatarEditForm, AvatarUploadForm
+from circulation.main.user.forms import EditProfileForm, AvatarEditForm, AvatarUploadForm
 from circulation.web import db, avatars
-from . import user
+from circulation.main.user import user
 import json
 
 

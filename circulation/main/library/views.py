@@ -4,9 +4,9 @@ from flask_login import login_required, current_user
 
 from circulation.web import db
 from circulation.models import Library, Log, Permission
-from . import library
-from .forms import SearchForm, EditLibraryForm, AddLibraryForm
-from ..decorators import admin_required, permission_required
+from circulation.main.library import library
+from circulation.main.library.forms import SearchForm, EditLibraryForm, AddLibraryForm
+from circulation.main.decorators import admin_required, permission_required
 
 
 @library.route('/')

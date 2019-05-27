@@ -3,8 +3,8 @@ from circulation.web import db
 from circulation.models import User, Library
 from flask import render_template, url_for, flash, redirect, request
 from flask_login import login_user, logout_user, login_required, current_user
-from . import auth
-from .forms import LoginForm, RegistrationForm, ChangePasswordForm
+from circulation.main.auth import auth
+from circulation.main.auth.forms import LoginForm, RegistrationForm, ChangePasswordForm
 
 
 @auth.route('/login/', methods=['GET', 'POST'])

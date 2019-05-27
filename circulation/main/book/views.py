@@ -3,10 +3,10 @@ from circulation.web import db
 from circulation.models import Book, Log, Comment, Permission, Tag, book_tag
 from flask import render_template, url_for, flash, redirect, request, abort
 from flask_login import current_user
-from . import book
-from .forms import SearchForm, EditBookForm, AddBookForm
-from ..comment.forms import CommentForm
-from ..decorators import admin_required, permission_required
+from circulation.main.book import book
+from circulation.main.book.forms import SearchForm, EditBookForm, AddBookForm
+from circulation.main.comment.forms import CommentForm
+from circulation.main.decorators import admin_required, permission_required
 
 
 @book.route('/')

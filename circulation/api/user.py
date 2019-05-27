@@ -1,8 +1,8 @@
 from circulation.models import User as model_User
 from flask import url_for
 from flask_restful import Resource, marshal_with
-from . import api, parser, default_per_page
-from .fields import user_detail_fields, user_list
+from circulation.api import api, parser, default_per_page
+from circulation.api.fields import user_detail_fields, user_list
 
 
 @api.route('/users/<int:user_id>/')

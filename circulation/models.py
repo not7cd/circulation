@@ -156,14 +156,20 @@ class Role(db.Model):
     @staticmethod
     def insert_roles():
         roles = {
-            'User': (Permission.RETURN_BOOK |
-                     Permission.BORROW_BOOK |
-                     Permission.WRITE_COMMENT, True),
-            'Moderator': (Permission.RETURN_BOOK |
-                          Permission.BORROW_BOOK |
-                          Permission.WRITE_COMMENT |
-                          Permission.DELETE_OTHERS_COMMENT, False),
-            'Administrator': (0x1ff, False)
+            'User': (
+                Permission.RETURN_BOOK | Permission.BORROW_BOOK | Permission.WRITE_COMMENT, True
+            ),
+            'Moderator': (
+                Permission.RETURN_BOOK |
+                Permission.BORROW_BOOK |
+                Permission.WRITE_COMMENT |
+                Permission.DELETE_OTHERS_COMMENT,
+                False
+            ),
+            'Administrator': (
+                0x1ff,
+                False
+            )
         }
         for r in roles:
             role = Role.query.filter_by(name=r).first()
