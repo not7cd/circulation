@@ -1,6 +1,6 @@
 from circulation.models import Library as model_Library
 from flask import url_for
-from flask.ext.restful import Resource, marshal_with
+from flask_restful import Resource, marshal_with
 from . import api, parser, default_per_page
 from .fields import library_fields, library_list
 

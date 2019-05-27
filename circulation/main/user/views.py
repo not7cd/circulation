@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from flask import render_template, url_for, flash, redirect, request, abort, g
-from flask.ext.login import login_required, current_user
+from flask_login import login_required, current_user
 from circulation.models import User, Log, Permission
 from .forms import EditProfileForm, AvatarEditForm, AvatarUploadForm
 from circulation.web import db, avatars

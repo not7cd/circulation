@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from flask import render_template, url_for, flash, redirect, request
-from flask.ext.login import login_required, current_user
+from flask_login import login_required, current_user
 
 from circulation.web import db
 from circulation.models import Library, Log, Permission
