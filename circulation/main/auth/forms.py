@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 from circulation.web import db
 from circulation.models import User
-from flask.ext.wtf import Form
+from flask_wtf import Form
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms import ValidationError
 from wtforms.validators import Email, Length, DataRequired, EqualTo
@@ -39,6 +39,6 @@ class ChangePasswordForm(Form):
     submit = SubmitField(u"Save password")
 
     def validate_old_password(self, field):
-        from flask.ext.login import current_user
+        from flask_login import current_user
         if not current_user.verify_password(field.data):
             raise ValidationError(u'Original password incorrect')

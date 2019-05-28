@@ -1,8 +1,8 @@
 from flask import url_for
-from flask.ext.restful import fields
+from flask_restful import fields
 
 from circulation.models import Log, Comment
-from . import default_per_page
+from circulation.api import default_per_page
 
 user_fields = {
     'id': fields.Integer,

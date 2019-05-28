@@ -1,8 +1,8 @@
 from circulation.models import Tag as model_Tag
 from flask import url_for
-from flask.ext.restful import Resource, marshal_with
-from . import api, parser, default_per_page
-from .fields import tag_detail_fields, tag_list
+from flask_restful import Resource, marshal_with
+from circulation.api import api, parser, default_per_page
+from circulation.api.fields import tag_detail_fields, tag_list
 
 
 @api.route('/books/tags/<int:tag_id>/')

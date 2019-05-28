@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 
 import bleach
 from flask import current_app, url_for
-from flask.ext.login import UserMixin, AnonymousUserMixin
+from flask_login import UserMixin, AnonymousUserMixin
 from markdown import markdown
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -156,14 +156,20 @@ class Role(db.Model):
     @staticmethod
     def insert_roles():
         roles = {
-            'User': (Permission.RETURN_BOOK |
-                     Permission.BORROW_BOOK |
-                     Permission.WRITE_COMMENT, True),
-            'Moderator': (Permission.RETURN_BOOK |
-                          Permission.BORROW_BOOK |
-                          Permission.WRITE_COMMENT |
-                          Permission.DELETE_OTHERS_COMMENT, False),
-            'Administrator': (0x1ff, False)
+            'User': (
+                Permission.RETURN_BOOK | Permission.BORROW_BOOK | Permission.WRITE_COMMENT, True
+            ),
+            'Moderator': (
+                Permission.RETURN_BOOK |
+                Permission.BORROW_BOOK |
+                Permission.WRITE_COMMENT |
+                Permission.DELETE_OTHERS_COMMENT,
+                False
+            ),
+            'Administrator': (
+                0x1ff,
+                False
+            )
         }
         for r in roles:
             role = Role.query.filter_by(name=r).first()

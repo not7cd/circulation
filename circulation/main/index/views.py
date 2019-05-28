@@ -1,9 +1,9 @@
 from circulation.web import db
 from circulation.models import User, Book, Comment, Log, Permission
 from flask import render_template
-from flask.ext.login import current_user
-from . import main
-from ..book.forms import SearchForm
+from flask_login import current_user
+from circulation.main.index import main
+from circulation.main.book.forms import SearchForm
 
 
 @main.app_context_processor
